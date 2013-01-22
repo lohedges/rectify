@@ -409,7 +409,7 @@ void parseCommandLineArguments(int argc, char **argv, ostringstream &targetFileN
 // Generate array of linear or logarithmic sampling points
 void generateSamplePoints(vector <long> &samplePoints, long &iterations, unsigned int &frames, bool &isLogarithmic)
 {
-	samplePoints.resize(iterations);
+	samplePoints.resize(frames);
 
 	unsigned int i;
 	if (isLogarithmic)
