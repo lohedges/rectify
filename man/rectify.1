@@ -39,8 +39,8 @@ existing pixel block on the canvas and the change is accepted with a Boltzmann
 weight that accounts for the difference in the absolute value of the pixel
 block's distance from the target image following the trial move. The system is
 coupled to a thermal bath which allows the user to control the probability of
-accepting moves that take you away from the target, thus allowing the rate of
-convergence to be tuned.
+accepting moves that take the image away from the target, thus allowing the rate
+of convergence to be tuned.
 .PP
 .B Rectify
 avoids unneccessary dependency on
@@ -148,7 +148,6 @@ a log file of the acceptance rate at each sampling time
 the acceptance probability for each stroke size (width, height), and
 .BR hist_xy.txt
 a two-dimensional matrix of the histogram data.
-.
 .SH DEFAULTS
 .PP
 .B iterations

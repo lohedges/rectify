@@ -17,7 +17,7 @@ all:
 clean:
 	$(MAKE) -C src clean
 
-# Install the executable, man page, and shared library
+# Install the executable and man page
 install:
 	$(MAKE) -C src
 	$(INSTALL) -d $(IFLAGS_EXEC) $(PREFIX)/bin
