@@ -66,7 +66,7 @@ int main (int argc, char** argv)
 	bool isMonitor = false;				// whether to monitor acceptance statistics
 
 	// absoulte pixel value of image block before and after trial
-	double currentBlockValue, trialBlockValue;
+	double currentBlockValue, trialBlockValue, blockValueChange;
 
 	// bounday values of stroke block
 	int x1, x2, y1, y2;
@@ -143,8 +143,8 @@ int main (int argc, char** argv)
 	// clear tally counter
 	resetTallyCounter(strokeTally, maxStrokeWidth);
 
-	// intialise rejection flag
-	bool isRejected = false;
+	// acceptance flag
+	bool isAccepted;
 
 	// canvas image is specified
 	if (isCanvas)
@@ -187,11 +187,8 @@ int main (int argc, char** argv)
 	// MAIN LOOP
 	for (i=1;i<=iterations;i++)
 	{
-		// undo trial move if rejected
-		if (isRejected) copyBrushStoke(currentImage, trialImage, width, x1, y1, x2, y2);
-
-		// reset rejection flag
-		isRejected = true;
+		// reset acceptance flag
+		isAccepted = false;
 
 		// make trial brush stroke
 		applyTrialBrushStroke(trialImage, width, height, rng, maxStrokeWidth, x1, y1, x2, y2);
@@ -202,12 +199,21 @@ int main (int argc, char** argv)
 		// compute difference in block values between target and trial image
 		trialBlockValue = computeBlockValue(trialImage, targetImage, width, x1, y1, x2, y2);
 
-		// accept trial move
-		if (rng() < exp(-beta*(trialBlockValue-currentBlockValue)))
+		// evaluate change in block value
+		blockValueChange = trialBlockValue - currentBlockValue;
+
+		// check whether move is accepted
+		if (blockValueChange < 0) isAccepted = true;
+		else
+		{
+			if (rng() < exp(-beta*blockValueChange)) isAccepted = true;
+		}
+
+		// copy block from trial to current image if accepted, do the opposite if rejected
+		if (isAccepted)
 		{
 			nAccepted++;
 			copyBrushStoke(trialImage, currentImage, width, x1, y1, x2, y2);
-			isRejected = false;
 
 			// update tally counter (max sure block extrema are different)
 			if (isMonitor)
@@ -218,6 +224,7 @@ int main (int argc, char** argv)
 				}
 			}
 		}
+		else copyBrushStoke(currentImage, trialImage, width, x1, y1, x2, y2);
 
 		// encode current image and write stats to stdout and file
 		while (i > samplePoints[samples])
