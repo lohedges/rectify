@@ -286,7 +286,7 @@ int main (int argc, char** argv)
 void printHelpMessage()
 {
 	puts("Rectify version 0.1.0, by Lester O. Hedges\n\n"
-	     "Syntax: mc_charcoal image [options]\n\n"
+	     "Syntax: rectify image [options]\n\n"
 
 	     "Available options:\n"
 	     " -h/--help                 : Print this help information\n"
