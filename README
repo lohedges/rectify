@@ -1,0 +1,128 @@
+
+RECTIFY(1)							    RECTIFY(1)
+
+
+
+NAME
+       rectify	-  converge  towards  a target image using a Monte Carlo algo‐
+       rithm.
+
+SYNOPSIS
+       rectify [IMAGE]
+       rectify [IMAGE] [options]
+
+DESCRIPTION
+       Rectify is a command-line tool that uses a Monte Carlo  (MC)  algorithm
+       to converge towards a target image using a random sequence of rectangu‐
+       lar brush strokes.  Images produced by rectify have a ghostly,  impres‐
+       sionistic quality.
+
+       Rectify works by repeatedly attempting to apply a randomly placed black
+       or white brush strokes of rectangular shape to a canvas. The stroke  is
+       blended	with  the existing pixel block on the canvas and the change is
+       accepted with a Boltzmann weight that accounts for  the	difference  in
+       the  absolute value of the pixel block's distance from the target image
+       following the trial move. The system is coupled to a thermal bath which
+       allows the user to control the probability of accepting moves that take
+       you away from the target, thus allowing the rate of convergence	to  be
+       tuned.
+
+       Rectify	avoids	unneccessary  dependency  on  zlib and libpng by using
+       LodePNG to decode and encode PNG images.	 MersenneTwister  is  used  to
+       provide high quality and efficient random numbers.
+
+       Rectify	must be passed at least one command-line argument, the path of
+       a PNG IMAGE file to be used as the target image. The image  will	 auto‐
+       matically  be  converted	 to black and white if color is detected. When
+       run, rectify will output a sequence of images showing the evolution  of
+       the  canvas  towards  the target image. In addition, the current accep‐
+       tance rate is printed to stdout allowing the user to monitor  the  rate
+       of convergence.
+
+       Rectify	is trivially parellelizable, MPI support will follow (allowing
+       effecient processing of very large images).
+
+OPTIONS
+       rectify	supports  the  following  short-  and  long-form  command-line
+       options. Invoking rectify with no options will print a help message.
+
+       -h, --help
+	      Print the help message.  LATUXIT_EDITOR.
+
+       -i INT, --iterations INT
+	      Where INT is an integer specifying the number of MC iterations.
+
+       -f INT, --frames INT
+	      Where  INT  is  an integer specifying the number of frames to be
+	      saved.
+
+       -s DOUBLE, --stroke DOUBLE
+	      Set the maximum extent of the trial stroke, where	 DOUBLE	 indi‐
+	      cates the stroke extent as a fraction of the target image width,
+	      e.g.  a value of 0.5 would set the maximum stroke	 extent	 (both
+	      width  and  height)  to  half the width of the target image. The
+	      algorithm proceeds more slowly when the maximum stroke width  is
+	      large since, on average, more pixels must be processed per trial
+	      move.
+
+       -c IMAGE, --canvas IMAGE
+	      Start the algorithm using an existing canvas given by PNG	 IMAGE
+	      file.  The  IMAGE	 must be the same size as the target otherwise
+	      rectify will abort. If the IMAGE is full color it will  be  con‐
+	      verted  to  black	 and  white  before the algorithm starts. This
+	      option can also be used to continue covergence from an  existing
+	      rectify project, e.g. if too few iterations were chosen.
+
+       -t DOUBLE, --temperature DOUBLE
+	      Specify  the  temperature of the thermal bath. A higher tempera‐
+	      ture will mean that more trial brush strokes  are	 accepted.  At
+	      zero  temperature, only moves that take the canvas closer to the
+	      target will be accepted. Temperature adds noise  to  the	system
+	      and can be used to tune the rate of convergence.
+
+       -l, --log
+	      Use logarithmic spacing for sampling points. This is useful when
+	      convergence is very slow.
+
+       -d DIRECTORY, --directory DIRECTORY
+	      Specify a directory for the output files.	 DIRECTORY  should  be
+	      in  the  working	directory  and	will  be created if it doesn't
+	      already exist.
+
+       -m, --monitor
+	      Turn on acceptance monitoring. If set, rectify will monitor sta‐
+	      tistics  for  the	 acceptance  rate  and	compute histograms for
+	      accepted brush strokes. This  is	useful	for  determining  what
+	      stroke  sizes  are  dominant as the canvas evolves. Trial stroke
+	      sizes can be tuned accordingly.  In monitor mode,	 rectify  will
+	      produce three additional output files: log.txt a log file of the
+	      acceptance rate at each sampling time; hist.txt  the  acceptance
+	      probability   for	  each	 stroke	  size	(width,	 height),  and
+	      hist_xy.txt a two-dimensional matrix of the histogram data.
+
+DEFAULTS
+       iterations 1000000
+
+       frames 1000
+
+       temperature 1.0
+
+       stroke 0.1
+
+       logarithmic off
+
+       monitor off
+
+CREDITS
+       LodePNG, http://lodev.org/lodepng.
+
+       MersenneTwister, www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html.
+
+       Anna Schneider, for the name.
+
+BUGS
+       Email bugs, comments, and artwork to lester.hedges+rectify@gmail.com.
+
+
+
+Lester Hedges			  2013/01/21			    RECTIFY(1)

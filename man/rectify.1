@@ -1,0 +1,182 @@
+\" Rectify man page
+.if !\n(.g \{\
+.	if !\w|\*(lq| \{\
+.		ds lq ``
+.		if \w'\(lq' .ds lq "\(lq
+.	\}
+.	if !\w|\*(rq| \{\
+.		ds rq ''
+.		if \w'\(rq' .ds rq "\(rq
+.	\}
+.\}
+.de Id
+.ds Dt \\$4
+..
+.Id $Id: rectify.1,v 1.00 2013/01/21 16:20:04 lester Exp $
+.TH RECTIFY 1 \*(Dt "Lester Hedges"
+.SH NAME
+rectify \- converge towards a target image using a Monte Carlo algorithm.
+.SH SYNOPSIS
+.B rectify
+.RI [ IMAGE ]
+.br
+.B rectify
+.RI [ IMAGE ]
+.RI [ options ]
+.SH DESCRIPTION
+.PP
+.B Rectify
+is a command-line tool that uses a Monte Carlo (MC) algorithm to converge
+towards a target image using a random sequence of rectangular brush strokes.
+Images produced by
+.B rectify
+have a ghostly, impressionistic quality.
+.PP
+.B Rectify
+works by repeatedly attempting to apply a randomly placed black or white brush
+strokes of rectangular shape to a canvas. The stroke is blended with the
+existing pixel block on the canvas and the change is accepted with a Boltzmann
+weight that accounts for the difference in the absolute value of the pixel
+block's distance from the target image following the trial move. The system is
+coupled to a thermal bath which allows the user to control the probability of
+accepting moves that take you away from the target, thus allowing the rate of
+convergence to be tuned.
+.PP
+.B Rectify
+avoids unneccessary dependency on
+.B zlib
+and
+.B libpng
+by using
+.B LodePNG
+to decode and encode
+.B PNG
+images.
+.B MersenneTwister
+is used to provide high quality and efficient random numbers.
+.PP
+.B Rectify
+must be passed at least one command-line argument, the path of a
+.B PNG
+.I IMAGE
+file to be used as the target image. The image will automatically be converted
+to black and white if color is detected. When run,
+.B rectify
+will output a sequence of images showing the evolution of the canvas towards
+the target image. In addition, the current acceptance rate is printed to
+.B stdout
+allowing the user to monitor the rate of convergence.
+.PP
+.B Rectify
+is trivially parellelizable, 
+.B MPI
+support will follow (allowing effecient processing of very large images).
+.SH OPTIONS
+.B
+rectify
+supports the following short- and long-form command-line options. Invoking
+.B rectify
+with no options will print a help message.
+.TP
+.BR \-h ", " \-\^\-help
+Print the help message.
+.BR LATUXIT_EDITOR .
+.TP
+.BI \-i " INT" "\fR,\fP \-\^\-iterations "INT
+Where
+.I INT
+is an integer specifying the number of MC iterations.
+.TP
+.BI \-f " INT" "\fR,\fP \-\^\-frames "INT
+Where
+.I INT
+is an integer specifying the number of frames to be saved.
+.TP
+.BI \-s " DOUBLE" "\fR,\fP \-\^\-stroke "DOUBLE
+Set the maximum extent of the trial stroke, where
+.I DOUBLE
+indicates the stroke extent as a fraction of the target image width, e.g.
+a value of 0.5 would set the maximum stroke extent (both width and height) to
+half the width of the target image. The algorithm proceeds more slowly when
+the maximum stroke width is large since, on average, more pixels must be
+processed per trial move.
+.TP
+.BI \-c " IMAGE" "\fR,\fP \-\^\-canvas "IMAGE
+Start the algorithm using an existing canvas given by
+.B PNG
+.I IMAGE
+file. The
+.I IMAGE
+must be the same size as the target otherwise
+.B rectify will abort. If the
+.I IMAGE
+is full color it will be converted to black and white before the
+algorithm starts. This option can also be used to continue covergence
+from an existing rectify project, e.g. if too few iterations were chosen.
+.TP
+.BI \-t " DOUBLE" "\fR,\fP \-\^\-temperature "DOUBLE
+Specify the temperature of the thermal bath. A higher temperature will mean
+that more trial brush strokes are accepted. At zero temperature, only moves
+that take the canvas closer to the target will be accepted. Temperature adds
+noise to the system and can be used to tune the rate of convergence.
+.TP
+.BR \-l ", " \-\^\-log
+Use logarithmic spacing for sampling points. This is useful when convergence
+is very slow.
+.TP
+.BI \-d " DIRECTORY" "\fR,\fP \-\^\-directory "DIRECTORY
+Specify a directory for the output files.
+.I DIRECTORY
+should be in the working directory and will be created if it doesn't already
+exist.
+.TP
+.BR \-m ", " \-\^\-monitor
+Turn on acceptance monitoring. If set,
+.B rectify
+will monitor statistics for the acceptance rate and compute histograms for
+accepted brush strokes. This is useful for determining what stroke sizes are
+dominant as the canvas evolves. Trial stroke sizes can be tuned accordingly.
+In
+.B monitor
+mode,
+.B rectify
+will produce three additional output files:
+.BR log.txt
+a log file of the acceptance rate at each sampling time;
+.BR hist.txt
+the acceptance probability for each stroke size (width, height), and
+.BR hist_xy.txt
+a two-dimensional matrix of the histogram data.
+.
+.SH DEFAULTS
+.PP
+.B iterations
+1000000
+.PP
+.B frames
+1000
+.PP
+.B temperature
+1.0
+.PP
+.B stroke
+0.1
+.PP
+.B logarithmic
+off
+.PP
+.B monitor
+off
+.SH CREDITS
+.PP
+.BR LodePNG ,
+.BR http://lodev.org/lodepng .
+.PP
+.BR MersenneTwister ,
+.BR www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html .
+.PP
+Anna Schneider, for the name.
+.SH BUGS
+.PP
+Email bugs, comments, and artwork to
+.BR lester.hedges+rectify@gmail.com .
