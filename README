@@ -96,7 +96,7 @@ OPTIONS
 	      stroke  sizes  are  dominant as the canvas evolves. Trial stroke
 	      sizes can be tuned accordingly.  In monitor mode,	 rectify  will
 	      produce three additional output files: log.txt a log file of the
-	      acceptance rate at each sampling time; hist.txt  the  acceptance
+	      acceptance rate at each sampling time  hist.txt  the  acceptance
 	      probability   for	  each	 stroke	  size	(width,	 height),  and
 	      hist_xy.txt a two-dimensional matrix of the histogram data.
 
