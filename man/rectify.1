@@ -60,7 +60,7 @@ must be passed at least one command-line argument, the path of a
 .B PNG
 .I IMAGE
 file to be used as the target image. The image will automatically be converted
-to black and white if color is detected. When run,
+to grayscale if color is detected. When run,
 .B rectify
 will output a sequence of images showing the evolution of the canvas towards
 the target image. In addition, the current acceptance rate is printed to
@@ -110,9 +110,9 @@ file. The
 must be the same size as the target otherwise
 .B rectify will abort. If the
 .I IMAGE
-is full color it will be converted to black and white before the
-algorithm starts. This option can also be used to continue covergence
-from an existing rectify project, e.g. if too few iterations were chosen.
+is full color it will be converted to grayscale before the algorithm starts.
+This option can also be used to continue covergence from an existing rectify
+project, e.g. if too few iterations were chosen.
 .TP
 .BI \-t " DOUBLE" "\fR,\fP \-\^\-temperature "DOUBLE
 Specify the temperature of the thermal bath. A higher temperature will mean

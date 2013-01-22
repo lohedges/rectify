@@ -40,7 +40,7 @@ void blendBlock(vector <unsigned char>&, unsigned int&, unsigned int&, double, i
 void copyBrushStoke(vector <unsigned char>&, vector <unsigned char>&, unsigned int&, int&, int&, int&, int&);
 double computeBlockValue(vector <unsigned char>&, vector <unsigned char>&, unsigned int&, int&, int&, int&, int&);
 void initializeImage(vector <unsigned char>&, unsigned int&, unsigned int&);
-void convertToBlackAndWhite(vector <unsigned char>&, unsigned int&, unsigned int&);
+void convertToGrayscale(vector <unsigned char>&, unsigned int&, unsigned int&);
 void resetTallyCounter(vector <vector <long> >&, unsigned int&);
 
 // BEGIN MAIN FUNCTION
@@ -168,9 +168,9 @@ int main (int argc, char** argv)
 		{
 			if (currentImage[0] != currentImage[2])
 			{
-				cout << "Starting image is not black and white... converting." << endl;
+				cout << "Starting image is not grayscale... converting." << endl;
 
-				convertToBlackAndWhite(currentImage, width, height);
+				convertToGrayscale(currentImage, width, height);
 			}
 		}
 	}
@@ -585,8 +585,8 @@ void initializeImage(vector <unsigned char> &image, unsigned int &width, unsigne
 	}
 }
 
-// Convert color image to black and white
-void convertToBlackAndWhite(vector <unsigned char> &image, unsigned int &width, unsigned int &height)
+// Convert color image to grayscale
+void convertToGrayscale(vector <unsigned char> &image, unsigned int &width, unsigned int &height)
 {
 	unsigned int x,y;
 	unsigned int color;
@@ -595,9 +595,9 @@ void convertToBlackAndWhite(vector <unsigned char> &image, unsigned int &width, 
 	{
 		for (x=0;x<width;x++)
 		{
-			color = int((double)image[4 * width * y + 4 * x + 0]*0.2989 +
-						(double)image[4 * width * y + 4 * x + 1]*0.5870 +
-							(double)image[4 * width * y + 4 * x + 2]*0.1140);
+			color = int((double)image[4 * width * y + 4 * x + 0]*0.2989
+					+ (double)image[4 * width * y + 4 * x + 1]*0.5870
+					+ (double)image[4 * width * y + 4 * x + 2]*0.1140);
 
 			image[4 * width * y + 4 * x + 0] = color;
 			image[4 * width * y + 4 * x + 1] = color;
