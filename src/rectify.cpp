@@ -558,9 +558,9 @@ double computeBlockValue(vector <unsigned char> &image,
 	{
 		for (x=x1;x<=x2;x++)
 		{
-			blockValue += fabs(image[4 * width * y + 4 * x + 0] - target[4* width * y + 4 * x + 0]);
-			blockValue += fabs(image[4 * width * y + 4 * x + 0] - target[4* width * y + 4 * x + 1]);
-			blockValue += fabs(image[4 * width * y + 4 * x + 0] - target[4* width * y + 4 * x + 2]);
+			blockValue += fabs(int(image[4 * width * y + 4 * x + 0]) - int(target[4* width * y + 4 * x + 0]));
+			blockValue += fabs(int(image[4 * width * y + 4 * x + 1]) - int(target[4* width * y + 4 * x + 1]));
+			blockValue += fabs(int(image[4 * width * y + 4 * x + 2]) - int(target[4* width * y + 4 * x + 2]));
 		}
 	}
 
