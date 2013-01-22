@@ -77,8 +77,10 @@ OPTIONS
 	      Specify  the  temperature of the thermal bath. A higher tempera‐
 	      ture will mean that more trial brush strokes  are	 accepted.  At
 	      zero  temperature, only moves that take the canvas closer to the
-	      target will be accepted. Temperature adds noise  to  the	system
-	      and can be used to tune the rate of convergence.
+	      target will be accepted (comparable to  a	 hill  climbing	 algo‐
+	      rithm).  Temperature adds noise to the system and can be used to
+	      tune the rate of convergence as well as the style of image  pro‐
+	      duced.
 
        -l, --log
 	      Use logarithmic spacing for sampling points. This is useful when

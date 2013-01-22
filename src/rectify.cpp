@@ -81,7 +81,7 @@ int main (int argc, char** argv)
 	ostringstream directoryName;
 	directoryName.str("");
 
-	// parse command line arguments
+	// parse command-line arguments
 	parseCommandLineArguments(argc, argv, targetFileName, startingFileName, directoryName,
 		iterations, frames, maxStrokeFraction, temperature, isLogarithmic, isCanvas, isMonitor);
 
@@ -190,6 +190,7 @@ int main (int argc, char** argv)
 		// undo trial move if rejected
 		if (isRejected) copyBrushStoke(currentImage, trialImage, width, x1, y1, x2, y2);
 
+		// reset rejection flag
 		isRejected = true;
 
 		// make trial brush stroke
@@ -218,7 +219,7 @@ int main (int argc, char** argv)
 			}
 		}
 
-		// encode current image and write stats to stdout
+		// encode current image and write stats to stdout and file
 		while (i > samplePoints[samples])
 		{
 			samples++;
@@ -292,7 +293,7 @@ void printHelpMessage()
 	     " -m/--monitor              : Monitor acceptance statistics\n");
 }
 
-// Parse arguments from command line
+// Parse arguments from command-line
 void parseCommandLineArguments(int argc, char **argv, ostringstream &targetFileName,
 	ostringstream &startingFileName, ostringstream &directoryName, long &iterations, unsigned int &frames,
 		double &maxStrokeFraction, double &temperature, bool &isLogarithmic, bool &isCanvas, bool &isMonitor)
@@ -388,7 +389,7 @@ void parseCommandLineArguments(int argc, char **argv, ostringstream &targetFileN
 
 			else
 			{
-				cerr << "Error: unknown command line parameter " << argv[i] << endl;
+				cerr << "Error: unknown command-line parameter " << argv[i] << endl;
 				cerr << "Run: for help run \"mc_charcoal -h\"" << endl;
 				exit(1);
 			}
@@ -434,13 +435,13 @@ void decodeImage(ostringstream &fileName, vector <unsigned char> &image, unsigne
 // Encode png image to disk
 void encodeImage(unsigned int &frame, ostringstream &directoryName, vector <unsigned char> &image, unsigned int &width, unsigned int &height)
 {
-    ostringstream fileName,num;
+	ostringstream fileName,num;
 	num.str("");
 	num.width(5);
 	num.fill('0');
 	num << right << frame;
 
-    fileName.str("");
+	fileName.str("");
 
 	if (strcmp(directoryName.str().c_str(), "") == 0)
 	{
@@ -583,7 +584,6 @@ void convertToBlackAndWhite(vector <unsigned char> &image, unsigned int &width, 
 	unsigned int x,y;
 	unsigned int color;
 
-	// create solid black canvas
 	for (y=0;y<height;y++)
 	{
 		for (x=0;x<width;x++)
