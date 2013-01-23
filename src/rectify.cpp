@@ -227,7 +227,7 @@ int main (int argc, char** argv)
 		else copyBrushStoke(currentImage, trialImage, width, x1, y1, x2, y2);
 
 		// encode current image and write stats to stdout and file
-		while (i > samplePoints[samples])
+		if (i >= samplePoints[samples])
 		{
 			samples++;
 
