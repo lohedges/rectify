@@ -416,7 +416,7 @@ void generateSamplePoints(vector <long> &samplePoints, long &iterations, unsigne
 	{
 		for (i=0;i<frames;i++)
 		{
-			samplePoints[i] = pow(iterations ,((double) i / (frames-1)));
+			samplePoints[i] = pow(iterations, ((double) i / (frames-1)));
 		}
 	}
 	else
