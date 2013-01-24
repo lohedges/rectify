@@ -490,16 +490,16 @@ void applyTrialBrushStroke(vector <unsigned char> &trialImage, unsigned int &wid
 
 	// enforce boundary restrictions
 	if (x1 < 0) x1 = 0;
-	else if (x1 > width-1) x1 = width-1;
+	else if (x1 > int(width)-1) x1 = width-1;
 
 	if (y1 < 0) y1 = 0;
-	else if (y1 > height-1) y1 = height-1;
+	else if (y1 > int(height)-1) y1 = height-1;
 
 	if (x2 < 0) x2 = 0;
-	else if (x2 > width-1) x2 = width-1;
+	else if (x2 > int(width)-1) x2 = width-1;
 
 	if (y2 < 0) y2 = 0;
-	else if (y2 > height-1) y2 = height-1;
+	else if (y2 > int(height)-1) y2 = height-1;
 
 	// blend block
 	blendBlock(trialImage, width, color, rng(), x1, y1, x2, y2);
