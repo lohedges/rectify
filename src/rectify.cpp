@@ -59,7 +59,7 @@ int main (int argc, char** argv)
 	// defaults
 	long iterations = 1000000;			// total number of iterations
 	unsigned int frames = 1000;			// number of images to sample
-	double temperature = 1.0;			// temperature of thermal bath
+	double temperature = 0.1;			// temperature of thermal bath
 	double maxStrokeFraction = 0.1;		// maximum extent of stroke (in fraction of target image width)
 	bool isLogarithmic = false;			// whether sampling is performed at logarithmic intervals
 	bool isCanvas = false;				// whether a starting canvas is specified
@@ -73,6 +73,9 @@ int main (int argc, char** argv)
 
 	// width and height of image in pixels
 	unsigned int width, height;
+
+	// distance from target image
+	double error;
 
 	// random number generator
 	MTRand rng;
@@ -137,6 +140,9 @@ int main (int argc, char** argv)
 	// set maximum extent of stroke (in pixels)
 	unsigned int maxStrokeWidth = maxStrokeFraction*width;
 
+	// set total number of pixels in canvas
+	unsigned int pixels = width*height;
+
 	// tally arrays for accepted stroke widths and heights
 	vector <vector <long> > strokeTally(maxStrokeWidth, vector <long> (maxStrokeWidth));
 
@@ -182,6 +188,12 @@ int main (int argc, char** argv)
 
 	trialImage = currentImage;
 
+	// set canvas boundaries
+	x1 = 0; x2 = width-1; y1 = 0; y2 = width-1;
+
+	// work out current distance from target
+	error = computeBlockValue(currentImage, targetImage, width, x1, y1, x2, y2);
+
 	cout << "Starting image generation..." << endl;
 
 	// MAIN LOOP
@@ -214,6 +226,7 @@ int main (int argc, char** argv)
 		{
 			nAccepted++;
 			copyBrushStoke(trialImage, currentImage, width, x1, y1, x2, y2);
+			error += blockValueChange;
 
 			// update tally counter (max sure block extrema are different)
 			if (isMonitor)
@@ -232,14 +245,14 @@ int main (int argc, char** argv)
 			samples++;
 
 			// write to stdout
-			printf("Frame: %4d, acceptance: %5.4f\n", samples, ((double) nAccepted/i));
+			printf("Frame: %4d, error: %5.4f, acceptance: %5.4f\n", samples, error/pixels, ((double) nAccepted/i));
 
 			// write acceptance statistics to file
 			if (isMonitor)
 			{
 				// write to log file
 				pFile = fopen(fileName.str().c_str(), "a");
-				fprintf(pFile, "%d %5.4f\n", samples, ((double) nAccepted/i));
+				fprintf(pFile, "%d %5.4f %5.4f\n", samples, error/pixels, ((double) nAccepted/i));
 				fclose(pFile);
 
 				// write to histogram data file
@@ -558,13 +571,12 @@ double computeBlockValue(vector <unsigned char> &image,
 	{
 		for (x=x1;x<=x2;x++)
 		{
+			// RGB values are the same, only need to consider one vector component
 			blockValue += fabs(int(image[4 * width * y + 4 * x + 0]) - int(target[4* width * y + 4 * x + 0]));
-			blockValue += fabs(int(image[4 * width * y + 4 * x + 1]) - int(target[4* width * y + 4 * x + 1]));
-			blockValue += fabs(int(image[4 * width * y + 4 * x + 2]) - int(target[4* width * y + 4 * x + 2]));
 		}
 	}
 
-	return blockValue;
+	return blockValue/255;
 }
 
 // Initialise blank image
