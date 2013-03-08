@@ -47,8 +47,8 @@ void resetTallyCounter(vector <vector <long> >&, unsigned int&);
 int main (int argc, char** argv)
 {
 	// counters
-	long i;								// trial iteration counter
-	long nAccepted = 0;					// number of accepted trials
+	long i;						        // trial iteration counter
+	long nAccepted = 0;			        // number of accepted trials
 	unsigned int samples = 0;			// number of samples
 	unsigned int j,k;					// extra variables for inner loops
 
