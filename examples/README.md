@@ -4,7 +4,6 @@ To get started, try running
 ``` sh
 	rectify nyc.png
 ```
-rectify nyc.png
 
 and then displaying the output images with your favorite image viewer, e.g
 
