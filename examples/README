@@ -1,4 +1,0 @@
-Here are some example images on which you can test out rectify.
-To get started, try running "rectify nyc.png" and then displaying the
-output images with your favorite image viewer, e.g "feh -f Frame*.png"
-on Linux, or "open Frame*png" on OS X.

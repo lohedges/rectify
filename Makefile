@@ -26,7 +26,7 @@ install:
 	$(INSTALL) $(IFLAGS_EXEC) src/rectify $(PREFIX)/bin
 	$(INSTALL) $(IFLAGS) man/rectify.1 $(PREFIX)/man/man1
 
-# Uninstall the executable, man page, and shared library
+# Uninstall the executable and man page
 uninstall:
 	rm -f $(PREFIX)/bin/rectify
 	rm -f $(PREFIX)/man/man1/rectify.1
