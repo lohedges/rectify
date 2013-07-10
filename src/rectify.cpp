@@ -1,4 +1,4 @@
-/*
+	/*
  * Rectify: Converge towards a target image using a Monte Carlo algorithm.
  *			Run	"rectify -h" for help.
  *
@@ -47,8 +47,8 @@ void resetTallyCounter(vector <vector <long> >&, unsigned int&);
 int main (int argc, char** argv)
 {
 	// counters
-	long i;						        // trial iteration counter
-	long nAccepted = 0;			        // number of accepted trials
+	long i;								// trial iteration counter
+	long nAccepted = 0;					// number of accepted trials
 	unsigned int samples = 0;			// number of samples
 	unsigned int j,k;					// extra variables for inner loops
 
@@ -410,7 +410,7 @@ void parseCommandLineArguments(int argc, char **argv, ostringstream &targetFileN
 			else
 			{
 				cerr << "Error: unknown command-line parameter " << argv[i] << endl;
-				cerr << "Run: for help run \"mc_charcoal -h\"" << endl;
+				cerr << "Run: for help run \"rectify -h\"" << endl;
 				exit(1);
 			}
 
