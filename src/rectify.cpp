@@ -410,7 +410,7 @@ void parseCommandLineArguments(int argc, char **argv, ostringstream &targetFileN
 			else
 			{
 				cerr << "Error: unknown command-line parameter " << argv[i] << endl;
-				cerr << "Run: for help run \"rectify -h\"" << endl;
+				cerr << "For help run \"rectify -h\"" << endl;
 				exit(1);
 			}
 
