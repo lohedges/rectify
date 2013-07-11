@@ -175,7 +175,6 @@ int main (int argc, char** argv)
 			if (currentImage[0] != currentImage[2])
 			{
 				cout << "Starting image is not grayscale... converting." << endl;
-
 				convertToGrayscale(currentImage, width, height);
 			}
 		}
