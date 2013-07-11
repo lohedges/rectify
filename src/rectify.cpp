@@ -1,4 +1,4 @@
-	/*
+/*
  * Rectify: Converge towards a target image using a Monte Carlo algorithm.
  *			Run	"rectify -h" for help.
  *
