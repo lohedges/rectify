@@ -47,23 +47,23 @@ void resetTallyCounter(vector <vector <long> >&, unsigned int&);
 int main (int argc, char** argv)
 {
 	// counters
-	long i;								// trial iteration counter
-	long nAccepted = 0;					// number of accepted trials
-	unsigned int samples = 0;			// number of samples
-	unsigned int j,k;					// extra variables for inner loops
+	long i;                             // trial iteration counter
+	long nAccepted = 0;                 // number of accepted trials
+	unsigned int samples = 0;           // number of samples
+	unsigned int j,k;                   // extra variables for inner loops
 
 	// file name buffers
-	ostringstream targetFileName;		// file name of target image
-	ostringstream startingFileName;		// file name of starting image
+	ostringstream targetFileName;       // file name of target image
+	ostringstream startingFileName;     // file name of starting image
 
 	// defaults
-	long iterations = 1000000;			// total number of iterations
-	unsigned int frames = 1000;			// number of images to sample
-	double temperature = 0.1;			// temperature of thermal bath
-	double maxStrokeFraction = 0.1;		// maximum extent of stroke (in fraction of target image width)
-	bool isLogarithmic = false;			// whether sampling is performed at logarithmic intervals
-	bool isCanvas = false;				// whether a starting canvas is specified
-	bool isMonitor = false;				// whether to monitor acceptance statistics
+	long iterations = 1000000;          // total number of iterations
+	unsigned int frames = 1000;         // number of images to sample
+	double temperature = 0.1;           // temperature of thermal bath
+	double maxStrokeFraction = 0.1;     // maximum extent of stroke (in fraction of target image width)
+	bool isLogarithmic = false;         // whether sampling is performed at logarithmic intervals
+	bool isCanvas = false;              // whether a starting canvas is specified
+	bool isMonitor = false;             // whether to monitor acceptance statistics
 
 	// absoulte pixel value of image block before and after trial
 	double currentBlockValue, trialBlockValue, blockValueChange;
@@ -292,7 +292,7 @@ int main (int argc, char** argv)
 }
 // END MAIN FUNCTION
 
-// FUNCTION DEFINITIONS
+// FUNCTION DECLARATIONS
 
 // Print help message to stdout
 void printHelpMessage()
