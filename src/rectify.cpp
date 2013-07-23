@@ -37,7 +37,7 @@ void encodeImage(unsigned int&, ostringstream&, vector <unsigned char>&, unsigne
 void applyTrialBrushStroke(vector <unsigned char>&, unsigned int&,
 	unsigned int&, MTRand&, unsigned int&, int&, int&, int&, int&);
 void blendBlock(vector <unsigned char>&, unsigned int&, unsigned int&, double, int&, int&, int&, int&);
-void copyBrushStoke(vector <unsigned char>&, vector <unsigned char>&, unsigned int&, int&, int&, int&, int&);
+void copyBrushStroke(vector <unsigned char>&, vector <unsigned char>&, unsigned int&, int&, int&, int&, int&);
 double computeBlockValue(vector <unsigned char>&, vector <unsigned char>&, unsigned int&, int&, int&, int&, int&);
 void initializeImage(vector <unsigned char>&, unsigned int&, unsigned int&);
 void convertToGrayscale(vector <unsigned char>&, unsigned int&, unsigned int&);
@@ -224,7 +224,7 @@ int main (int argc, char** argv)
 		if (isAccepted)
 		{
 			nAccepted++;
-			copyBrushStoke(trialImage, currentImage, width, x1, y1, x2, y2);
+			copyBrushStroke(trialImage, currentImage, width, x1, y1, x2, y2);
 			error += blockValueChange;
 
 			// update tally counter (max sure block extrema are different)
@@ -236,7 +236,7 @@ int main (int argc, char** argv)
 				}
 			}
 		}
-		else copyBrushStoke(currentImage, trialImage, width, x1, y1, x2, y2);
+		else copyBrushStroke(currentImage, trialImage, width, x1, y1, x2, y2);
 
 		// encode current image and write stats to stdout and file
 		if (i >= samplePoints[samples])
@@ -540,7 +540,7 @@ void blendBlock(vector <unsigned char> &image, unsigned int &width,
 }
 
 // Copy stroke region between images
-void copyBrushStoke(vector <unsigned char> &from,
+void copyBrushStroke(vector <unsigned char> &from,
 	vector <unsigned char> &to, unsigned int &width, int &x1, int &y1, int &x2, int &y2)
 {
 	int x,y;
