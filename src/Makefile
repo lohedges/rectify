@@ -9,7 +9,7 @@ include ../config.mk
 
 all: rectify
 
-rectify: lodepng.cpp rectify.cpp
+rectify: lodepng.h lodepng.cpp rectify.cpp
 	$(CXX) $(CXXFLAGS) lodepng.cpp rectify.cpp -o rectify
 
 clean:
